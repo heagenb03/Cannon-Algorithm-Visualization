@@ -95,4 +95,7 @@ class Cannon(Scene):
                 self.play(*move_animations)
                 self.wait(0.25)
         
+        print(scene3.entry_a_values)
+        print(scene3.entry_b_values)
+        
         self.wait(1)
