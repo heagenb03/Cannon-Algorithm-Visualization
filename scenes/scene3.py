@@ -13,6 +13,15 @@ class Scene3:
         self.entry_b_values = np.array(MATRIX_B_NUMBERS.copy())
         
     def moveAValuesAcross(self, matrix, row):
+        """Move Aij values across the matrix
+
+        Args:
+            matrix (VGroup): matrix used in the scene
+            row (int): index of the row to move the values across
+
+        Returns:
+            list: list of animations that move each Aij value across the matrix
+        """
         move_animations = []
         temp_a_values = [None] * MATRIX_ROW_COL_CT
         
@@ -28,7 +37,8 @@ class Scene3:
                 
             arcPath = ArcBetweenPoints(matrix[intial_entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_A_VGROUP].get_center(), angle=PI/2)
             move_animations.append(MoveAlongPath(matrix[intial_entry][MATRIX_C_ENTRY_A_VGROUP], arcPath))
-            
+        
+        #Store the values in a temporary array
             temp_a_values[(col - 1) % MATRIX_ROW_COL_CT] = self.entry_a_values[intial_entry]
         
         for col in range(MATRIX_ROW_COL_CT):
@@ -37,6 +47,15 @@ class Scene3:
         return move_animations
             
     def moveBValuesUp(self, matrix, col):
+        """Move Bij values up the matrix
+
+        Args:
+            matrix (VGroup): matrix used in the scene
+            col (int): index of the column to move the values up
+
+        Returns:
+            list: list of animations that move each Bij value up the matrix
+        """
         move_animations = []
         temp_b_values = [None] * MATRIX_ROW_COL_CT
         
@@ -53,6 +72,7 @@ class Scene3:
             arcPath = ArcBetweenPoints(matrix[intial_entry][MATRIX_C_ENTRY_B_VGROUP].get_center(), matrix[final_point_entry][MATRIX_C_ENTRY_B_VGROUP].get_center(), angle=PI/2)
             move_animations.append(MoveAlongPath(matrix[intial_entry][MATRIX_C_ENTRY_B_VGROUP], arcPath))
         
+        #Store the values in a temporary array
             temp_b_values[(row - 1) % MATRIX_ROW_COL_CT] = self.entry_b_values[intial_entry]
         
         for row in range(MATRIX_ROW_COL_CT):
@@ -61,6 +81,20 @@ class Scene3:
         return move_animations
     
     def computeCValues(self, matrix):
+        """Compute the temporary Cij values (Aij * Bij) and add them to the computed Cij (new temp Cij + prev. Cij) values
+
+        Args:
+            matrix (VGroup): matrix used in the scene
+
+        Returns:
+            list: intial fade in animations for multi sign
+            list: final fade in animations for computed temp C values
+            list: intial move animations for Aij and Bij values to multi sign
+            list: final move animations for computed temp C values to final position
+            list: intial fade out animations for multi sign, Aij and Bij values
+            list: final fade out animations for computed temp Cij values
+            list: transform animations for computed temp Cij values to final temp Cij value
+        """
         intial_move_animations = []
         final_move_animations = []
         intial_fade_in_animations = []
