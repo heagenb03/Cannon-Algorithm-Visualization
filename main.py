@@ -80,6 +80,9 @@ class Cannon(Scene):
         Scene 3
             1. Move correspodning Aij values across the matrix
             2. Move correspodning Bij values across the matrix
+            3. Compute Cij values
+            4. Move all Aij values accross the matrix
+            5. Move all Bij values up the matrix
         """
         #1
         for row in range(1, MATRIX_ROW_COL_CT):
@@ -94,8 +97,51 @@ class Cannon(Scene):
                 move_animations = scene3.moveBValuesUp(matrixC_scene2, col)
                 self.play(*move_animations)
                 self.wait(0.25)
-        
-        print(scene3.entry_a_values)
-        print(scene3.entry_b_values)
-        
         self.wait(1)
+        
+        shift_count = 0
+        while shift_count < MATRIX_ROW_COL_CT:
+            #3
+            scene3.text_c_value_list = []
+            scene3.temp_computed_c_values = []
+            
+            intial_fade_in_animations, final_fade_in_animations, intial_move_animations, final_move_animations, intial_fade_out_animations, final_fade_out_animations, transform_animations = scene3.computeCValues(matrixC_scene2)
+            
+            self.play(*intial_fade_in_animations)
+            self.wait(1)
+            self.play(*intial_move_animations)
+            self.wait(0.15)
+            self.play(*final_fade_in_animations,
+                    *intial_fade_out_animations)
+            self.wait(1)
+            self.play(*final_move_animations)
+            self.wait(0.5)
+            self.play(*transform_animations,
+                    *final_fade_out_animations)
+            self.wait(2)
+            
+            
+            if shift_count != MATRIX_ROW_COL_CT - 1:
+                #4
+                total_move_animations = []
+                for row in range(MATRIX_ROW_COL_CT):
+                    move_animations = scene3.moveAValuesAcross(matrixC_scene2, row)
+                    total_move_animations.extend(move_animations)
+                    
+                self.play(*total_move_animations)
+                self.wait(1)
+                
+                #5
+                total_move_animations = []
+                for col in range(MATRIX_ROW_COL_CT):
+                    move_animations = scene3.moveBValuesUp(matrixC_scene2, col)
+                    total_move_animations.extend(move_animations)
+                
+                self.play(*total_move_animations)
+                self.wait(1)
+            
+            shift_count += 1
+            
+        """
+        Scene 4
+        """
