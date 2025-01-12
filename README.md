@@ -4,9 +4,7 @@ A simple animation of the Cannon Algorithm for matrix multiplication. Created un
 
 ## Watch
 
-View the animation on [Youtube](https://youtu.be/olIEHFK_RzM)
-Or
-View the animation in the local [Cannon.mp4](https://github.com/heagenb03/Cannon-Algorithm-Visualization/blob/main/media/videos/main/1080p60/Cannon.mp4) file that updates alongside [main.py](https://github.com/heagenb03/Cannon-Algorithm-Visualization/blob/main/main.py)
+View the animation on [Youtube](https://youtu.be/olIEHFK_RzM) or view the animation in the local [Cannon.mp4](https://github.com/heagenb03/Cannon-Algorithm-Visualization/blob/main/media/videos/main/1080p60/Cannon.mp4) file that updates alongside [main.py](https://github.com/heagenb03/Cannon-Algorithm-Visualization/blob/main/main.py)
 
 ## Executing the Program
 
